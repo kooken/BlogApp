@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 
+from blog.validators import validate_title, validate_age
 
 NULLABLE = {'blank': True,
             'null': True}
@@ -9,8 +10,9 @@ NULLABLE = {'blank': True,
 class Post(models.Model):
     title = models.CharField(
         max_length=200,
-        verbose_name="Product title",
-        help_text="Type your product title here",
+        verbose_name="Post title",
+        help_text="Type your post title here",
+        validators=[validate_title]
     )
 
     text = models.TextField(
@@ -43,6 +45,10 @@ class Post(models.Model):
         auto_now=True,
         verbose_name='Date of update'
     )
+
+    def save(self, *args, **kwargs):
+        validate_age(self.author)
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = "Ad"
