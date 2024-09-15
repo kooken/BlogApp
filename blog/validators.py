@@ -14,6 +14,6 @@ def validate_age(user):
 
 
 def validate_title(value):
-    forbidden_words = ['ерунда', 'глупость', 'чепуха']
+    forbidden_words = ['stupid', 'fuck', 'idiot']
     if any(word in value.lower() for word in forbidden_words):
         raise ValidationError('Title contains forbidden words')
